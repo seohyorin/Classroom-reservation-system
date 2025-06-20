@@ -1,10 +1,9 @@
 import java.util.Scanner;
 
-public class User extends TimeTable {
+public class User{
     private BookingManager bookingManager;
 
     public User(BookingManager bookingManager) {
-        super();
         this.bookingManager = bookingManager;
     }
 
@@ -41,14 +40,5 @@ public class User extends TimeTable {
         String time = scanner.next();
 
         TimeTable.SetClassInfo classInfo = new TimeTable.SetClassInfo();
-        boolean found = false;
-
-        for (TimeTable entry : classInfo.setclass) {
-            if (entry.classnumber.equals(classNumber) && entry.time.equals(time)) {
-                System.out.println("--- 예약 가능 여부 ---");
-                System.out.println("[호실: " + entry.classnumber + " | 시간: " + entry.time + " | 예약상태: " + entry.CheckState() + "]");
-                found = true;
-                break;
-            }
-        }
+        classInfo.SetTimeTable(classNumber, false);
 }
