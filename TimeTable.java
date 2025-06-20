@@ -35,8 +35,9 @@ public class TimeTable {
                 return "상태 불명";
         }
     }
+}
 
-    static class SetClassInfo{
+class SetClassInfo{
         TimeTable[] setclass = {
             new TimeTable("55102", "09:00", ReservationState.REJECTED),new TimeTable("55102", "10:00", ReservationState.REJECTED),
             new TimeTable("55102", "11:00", ReservationState.REJECTED),new TimeTable("55102", "14:00", ReservationState.REJECTED),
@@ -48,6 +49,10 @@ public class TimeTable {
             new TimeTable("55516", "12:00", ReservationState.REJECTED),new TimeTable("55516", "13:00", ReservationState.REJECTED),
             new TimeTable("55516", "14:00", ReservationState.REJECTED)
         };
+
+        public TimeTable[] getSetClass(){
+            return setclass;
+        }
         
 
         public void SetTimeTable(String classNumber, boolean isAdmin){
@@ -64,5 +69,4 @@ public class TimeTable {
                  }
             }
         }
-    }   
-}
+}   
