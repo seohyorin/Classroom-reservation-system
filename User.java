@@ -28,8 +28,7 @@ public class User{
         System.out.println("취소할 시간을 입력하세요 (예: 09:00):");
         String enteredTime = scanner.next();
 
-        String result = bookingManager.cancel(enteredStudentIdName, enteredClassroomNumber, enteredTime);
-        System.out.println(result);
+        bookingManager.cancelBooking(enteredStudentIdName, enteredClassroomNumber, enteredTime);
     }
 
     public void check() {
@@ -39,6 +38,7 @@ public class User{
         System.out.println("확인할 시간을 입력하세요 (예: 09:00):");
         String time = scanner.next();
 
-        TimeTable.SetClassInfo classInfo = new TimeTable.SetClassInfo();
-        classInfo.SetTimeTable(classNumber, false);
+        SetClassInfo classInfo = new SetClassInfo();
+        classInfo.printTimeTable(classNumber, false);
+    }
 }
