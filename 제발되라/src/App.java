@@ -1,29 +1,31 @@
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
+// import Admin;
+// import User;
+// import TimeTable;
+
+public class App {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("=== 수업 예약 시스템 ===");
+        System.out.println("=== 강의실 예약 시스템 ===");
         System.out.print("관리자이신가요? (y/n): ");
         String input = sc.nextLine();
 
-        if (isAdminLogin(input)) {
-            System.out.println("관리자 모드로 진입합니다.");
+        List<TimeTable> list = new ArrayList<>();
+        list.add(new TimeTable("101", "10:00 ~ 12:00", true)); // 예시용
+
+        if (input.equalsIgnoreCase("y")) {
             Admin admin = new Admin();
-            admin.approveClass("자바 프로그래밍");
-            admin.viewAllSchedules();
+            admin.printPendingReservations(list);
+            admin.approveReservation(list.get(0));
         } else {
-            System.out.println("사용자 모드로 진입합니다.");
             User user = new User();
-            user.requestClass("자료구조");
-            user.viewMySchedule();
+            user.requestClass("101호");
+            user.cancelClass("101호");
         }
 
         sc.close();
-    }
-
-    public static boolean isAdminLogin(String input) {
-        return input.equalsIgnoreCase("y");
     }
 }
