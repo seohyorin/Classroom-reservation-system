@@ -11,47 +11,72 @@ public class User {
 
     public void requestClass() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("학번이름을 입력하세요.");
-        String enteredStudentIdName = scanner.next();
-        System.out.println("예약할 강의실의 번호를 입력하세요.");
-        String enteredClassroomNumber = scanner.nextLine();
+        System.out.println("학번이름을 입력하세요:");
+        String enteredStudentIdName = scanner.nextLine();  // nextLine() 변경
+        System.out.println("예약할 강의실의 번호를 입력하세요:");
+        String enteredClassroomNumber = scanner.nextLine();  // nextLine() 변경
         System.out.println("예약할 시간을 입력하세요 (예: 09:00):");
-        String enteredTime = scanner.next();
+        String enteredTime = scanner.nextLine();  // nextLine() 변경
 
         bookingManager.addBookingRequest(enteredStudentIdName, enteredClassroomNumber, enteredTime);
     }
 
     public void cancelClass() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("학번이름을 입력하세요.");
-        String enteredStudentIdName = scanner.next();
-        System.out.println("취소할 강의실의 번호를 입력하세요.");
-        String enteredClassroomNumber = scanner.next();
+        System.out.println("학번이름을 입력하세요:");
+        String enteredStudentIdName = scanner.nextLine();  // nextLine() 변경
+        System.out.println("취소할 강의실의 번호를 입력하세요:");
+        String enteredClassroomNumber = scanner.nextLine();  // nextLine() 변경
         System.out.println("취소할 시간을 입력하세요 (예: 09:00):");
-        String enteredTime = scanner.next();
+        String enteredTime = scanner.nextLine();  // nextLine() 변경
 
+        // 수정: System.out.println 제거
         bookingManager.cancelBooking(enteredStudentIdName, enteredClassroomNumber, enteredTime);
     }
-
-    public void check() {
+    
+    public void showTimeTable() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("확인할 강의실 번호를 입력하세요:");
-        String classNumber = scanner.next();
-        System.out.println("확인할 시간을 입력하세요 (예: 09:00):");
-        String time = scanner.nextLine();
+        System.out.println("시간표를 확인할 강의실 번호를 입력하세요:");
+        String classNumber = scanner.nextLine();
+        
+        // TimeTable의 SetTimeTable 메서드 활용
+        TimeTable.SetClassInfo classInfo = new TimeTable.SetClassInfo();
+        classInfo.SetTimeTable(classNumber, false);  // isAdmin = false
+    }
 
-        boolean found = false;
+    public void checkMyReservations() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("학번이름을 입력하세요:");
+        String studentName = scanner.nextLine();
+        
+        System.out.println("=== " + studentName + "님의 예약 관련 현황 ===");
+        
+        // 승인 대기 중인 예약 표시
+        System.out.println("\n[ 승인 대기 중인 예약 ]");
+        boolean hasPending = false;
         for (TimeTable entry : bookingManager.getTableList()) {
-            if (entry.classNumber.equals(classNumber) && entry.time.equals(time)) {
-                System.out.println("--- 예약 가능 여부 ---");
-                System.out.println("[호실: " + entry.classNumber + " | 시간: " + entry.time + " | 예약상태: " + entry.UserViewState() + "]");
-                found = true;
-                break;
+            if (entry.state == ReservationState.PENDING) {
+                System.out.println("- " + entry.classNumber + "호실 " + entry.time + " (승인 대기)");
+                hasPending = true;
             }
         }
-
-        if (!found) {
-            System.out.println("해당 시간의 정보가 없습니다.");
+        if (!hasPending) {
+            System.out.println("승인 대기 중인 예약이 없습니다.");
         }
+        
+        // 승인된 예약 표시
+        System.out.println("\n[ 승인된 예약 ]");
+        boolean hasApproved = false;
+        for (TimeTable entry : bookingManager.getTableList()) {
+            if (entry.state == ReservationState.APPROVED) {
+                System.out.println("- " + entry.classNumber + "호실 " + entry.time + " (승인됨)");
+                hasApproved = true;
+            }
+        }
+        if (!hasApproved) {
+            System.out.println("승인된 예약이 없습니다.");
+        }
+        
+        System.out.println("\n※ 현재는 전체 예약 현황을 보여드립니다.");
     }
 }

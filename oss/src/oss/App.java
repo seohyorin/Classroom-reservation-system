@@ -38,6 +38,7 @@ public class App {
         }
     }
     
+    // 관리자 모드 - 기존과 동일
     private static void adminMode(BookingManager bookingManager, Scanner sc) {
         Admin admin = new Admin();
         
@@ -69,30 +70,35 @@ public class App {
         }
     }
     
+    // 사용자 모드 - 메뉴만 수정됨
     private static void userMode(BookingManager bookingManager, Scanner sc) {
         User user = new User(bookingManager);
         
         while (true) {
             System.out.println("\n=== 사용자 모드 ===");
-            System.out.println("1. 강의실 예약");
-            System.out.println("2. 예약 취소");
-            System.out.println("3. 강의실 상태 확인");
-            System.out.println("4. 메인 메뉴로 돌아가기");
+            System.out.println("1. 강의실 시간표 보기");      // 새로운 메뉴
+            System.out.println("2. 강의실 예약");
+            System.out.println("3. 예약 취소");
+            System.out.println("4. 내 예약 상태 확인");       // 메뉴명 변경
+            System.out.println("5. 메인 메뉴로 돌아가기");    // 번호 변경
             System.out.print("선택: ");
             
             String choice = sc.nextLine();
             
             switch (choice) {
                 case "1":
-                    user.requestClass();
+                    user.showTimeTable();           // 새로운 메서드 호출
                     break;
                 case "2":
-                    user.cancelClass();
+                    user.requestClass();
                     break;
                 case "3":
-                    user.check();
+                    user.cancelClass();
                     break;
                 case "4":
+                    user.checkMyReservations();     // 메서드명 변경
+                    break;
+                case "5":                           // 4 → 5로 변경
                     return;
                 default:
                     System.out.println("잘못된 선택입니다. 다시 입력해주세요.");
@@ -100,6 +106,7 @@ public class App {
         }
     }
     
+    // 관리자 기능들 - 기존과 완전히 동일
     private static void approveReservation(Admin admin, BookingManager bookingManager, Scanner sc) {
         System.out.print("승인할 강의실 번호를 입력하세요: ");
         String classNumber = sc.nextLine();

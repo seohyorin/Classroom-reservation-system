@@ -1,6 +1,7 @@
 package oss;
 import java.util.List;
 
+
 public class Admin {
 
     // 예약 신청 현황 출력 (PENDING 상태인 예약만 보여줌)
