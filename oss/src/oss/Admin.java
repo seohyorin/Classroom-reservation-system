@@ -1,10 +1,5 @@
+package oss;
 import java.util.List;
-
-enum ReservationState {
-    PENDING,
-    APPROVED,
-    REJECTED
-}
 
 public class Admin {
 
