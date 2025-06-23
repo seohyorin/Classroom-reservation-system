@@ -1,5 +1,7 @@
 import java.util.List;
 
+package oss;
+
 enum ReservationState {
     PENDING,
     APPROVED,

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 // import User;
 // import TimeTable;
 
+package oss;
+
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
